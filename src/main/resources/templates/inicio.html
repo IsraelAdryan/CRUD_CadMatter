@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+
+<!-- Este html será o inicial, a primeira página a ser carregada após a página de login -->
+
+<!--  layout:decorate serve para especificar que a estrutura estática da página será baseado em um html
+layout separado.-->
+
+<html lang="pt" layout:decorate="~{layout}">
+
+<head>
+
+ <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/css/bootstrap.min.css" 
+       rel="stylesheet"
+       integrity="sha384-BmbxuPwQa2lc/FVzBcNJ7UAyJxM6wuqIj61tLrc4wSX0szH/Ev+nYRRuWlolflfl"
+       crossorigin="anonymous">
+
+
+<meta charset="UTF-8">
+<title>CadMatter</title>
+
+</head>
+<body>
+
+	<!-- <section layout:fragment> serve para especificar que esse conteudo é dinâmico, estando 
+         relacionado com o html layout.  -->
+
+	<section layout:fragment="corpo">
+
+		<!-- Tags <h2>, <p> e <br> para formatações diferentes dos textos inseridos dentro das tags. -->
+
+		<h2 style="text-align: center;">Bem-vindo!</h2>
+		<p style="text-align: center;">Este é o sistema de cadastro de
+			matérias e professores CadMatter.</p>
+		<br />
+
+		<p style="text-align: center;">Neste site você poderá cadastrar
+			matérias escolares, como também, professores e associar a turmas.</p>
+
+		<!-- <Form> responsável por acessar o método de saida (logout) da conta do site
+             implementando um botão para que possa realizar essa ação-->
+
+      <div class="text-center"> 
+
+		<form th:action="@{/logout}" method="post">
+			<input class="btn btn-danger" type="submit" value="Sair" /><br />
+		</form>
+
+    </div>
+
+	</section>
+
+
+
+
+
+</body>
+</html>

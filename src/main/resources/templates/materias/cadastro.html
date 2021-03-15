@@ -1,0 +1,310 @@
+<!DOCTYPE html>
+
+<!-- Está página html é responsável por abrigar a estrutura necessária para o cadastro 
+de uma matéria. -->
+
+
+<!-- layout:decorate é utilizado para relacionar a página atual com a página html layout e o conteúdo
+estático armazenado nela.-->
+
+<html lang="pt" layout:decorate="~{layout}">
+
+<head>
+<meta charset="UTF-8">
+
+
+<link
+	href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/css/bootstrap.min.css"
+	rel="stylesheet"
+	integrity="sha384-BmbxuPwQa2lc/FVzBcNJ7UAyJxM6wuqIj61tLrc4wSX0szH/Ev+nYRRuWlolflfl"
+	crossorigin="anonymous">
+
+
+<title>Cadastro de matérias</title>
+
+<!-- jQuery Autocomplete -->
+<link rel="stylesheet"
+	href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+<script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+
+<!-- Scripts para a execução do autocomplete usando JavaScript. -->
+
+<!-- Scrip para a execução da função de não permitir digitar valores incoerentes com os campos no
+momento do cadastro. -->
+
+<script> 
+
+       $(function (){
+          $("#professor").autocomplete({
+              source: "/materias/autocompleteProfessores",
+              minLength: 2,
+              select: function (event, ui) { 
+                  this.value = ui.item.label;
+                  $("#idProfessor").val(ui.item.value);
+                  return false;
+              
+              } 
+          
+          
+          });
+       
+       
+       });
+       
+       $(function (){
+          $("#turma").autocomplete({
+              source: "/materias/autocompleteTurmas",
+              minLength: 1,
+              select: function (event, ui) { 
+                  this.value = ui.item.label;
+                  $("#idTurma").val(ui.item.value);
+                  return false;
+              
+              } 
+          
+          
+          });
+       
+       
+       });
+
+
+    </script>
+
+<script>
+
+   function Numeros(num) {
+        var n = /[^0-9.]/;
+        n.lastIndex = 0;
+        var campo = num;
+        if (n.test(campo.value)) {
+          campo.value = "";
+        }
+    }
+    
+</script>
+
+
+</head>
+<body>
+	<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+		<div class="container-fluid">
+			<a class="navbar-brand" href="#">CadMatter</a>
+			<button class="navbar-toggler" type="button"
+				data-bs-toggle="collapse" data-bs-target="#navbarText"
+				aria-controls="navbarText" aria-expanded="false"
+				aria-label="Toggle navigation">
+
+				<span class="navbar-toggler-icon"></span>
+			</button>
+
+			<!-- Elementos que estarão visiveis na barra de navegação.
+			
+			sec:authorize serve para limitar qual tipo de usuário poderá acessar os htmls:
+			  hasAuthority('ADMIN') - somente usuário ADMIN pode acessar;
+			  
+			  isAuthenticated() - qualquer usuário (COMUM) pode acessar;
+			
+			 -->
+
+			<div class="collapse navbar-collapse" id="navbarText">
+				<ul class="navbar-nav me-auto mb-2 mb-lg-0">
+					<li class="nav-item"><a class="nav-link " aria-current="page"
+						href="/">Início</a></li>
+					<li class="nav-item"><a class="nav-link"
+						href="/materias/cadastro" sec:authorize="hasAuthority('ADMIN')">Cadastrar
+							Matérias</a></li>
+					<li class="nav-item"><a class="nav-link"
+						href="/materias/busca" sec:authorize="isAuthenticated()">Buscar
+							Matérias</a></li>
+					<li class="nav-item"><a class="nav-link"
+						href="/professores/cadastroProf"
+						sec:authorize="hasAuthority('ADMIN')">Cadastrar Professores</a></li>
+					<li class="nav-item"><a class="nav-link"
+						href="/professores/buscaProf" sec:authorize="isAuthenticated()">Buscar
+							Professores</a></li>
+				</ul>
+			</div>
+		</div>
+	</nav>
+	<br>
+	<br>
+
+	<!-- <section layout:fragment> É utilizado para especificar que o código dentro dele é dinâmico,
+relacionado com o html layout. -->
+
+	<section layout:fragment="corpo">
+
+		<h2 style="text-align: center;">Cadastro de matérias</h2>
+		<br> <br>
+		<!-- th:replace utilizado para especificar que os métodos de mensagem "sucesso" e "error" estão
+sendo utilizada, relacionada com o html mensagens. -->
+
+		<div th:replace="fragments/mensagens"></div>
+
+		<!-- Trecho responsável por salvar uma matéria baseado em seu id e carregar a URL especificada.
+Salva cada valor especificado nos campos nos atributos da entidade Matéria.  -->
+
+		<div class="container d-flex justify-content-center">
+			<form class="form-floating" th:action="@{/materias/salvar}"
+				th:object="${materia}" method="post" enctype="multipart/form-data">
+
+				<!-- Usa o tipo "hidden" para que essa informação não fique visivel para o usuário. -->
+
+				<input type="hidden" th:field="${materia.id}" />
+
+				<!-- tag <table> para a criação de uma tabela. -->
+
+				<table>
+
+					<!-- Local para informar o nome do professor vinculado a matéria.
+				    Possui um campo de texto. Busca o valor do campo no atributo "nome" 
+				    da entidade Professor. -->
+
+					<tr>
+						<td>Professor:</td>
+						<td><input type="text" class="form-control" id="professor"
+							th:field="${materia.professor.nome}"> <input
+							id="idProfessor" type="hidden" th:field="${materia.professor.id}" /></td>
+					</tr>
+					<tr>
+
+						<!-- Campo para especificar a carga horária da matéria.
+					onkeyup="Numeros(this) retorna o código JavaScript na tag <script>
+					para não permitir que o usuário digite texto no local que deveria
+					ser apenas números. -->
+
+						<td>Carga:</td>
+
+
+						<td><input type="text" onkeyup="Numeros(this)" maxlength="5"
+							class="form-control" id="floatingInput"
+							th:field="${materia.carga}" /><br></td>
+
+
+					</tr>
+					<tr>
+
+						<!-- Campo para especificar os dias que a matéria é aplicada por semana.
+					onkeyup="Numeros(this) retorna o código JavaScript na tag <script>
+					para não permitir que o usuário digite texto no local que deveria
+					ser apenas números.  -->
+
+						<td>Dias:</td>
+
+
+						<td><input type="text" onkeyup="Numeros(this)" maxlength="5"
+							class="form-control" id="floatingInput"
+							th:field="${materia.dias}" /><br></td>
+
+
+
+					</tr>
+					<tr>
+
+						<!-- Campo para especificar qual o nome da matéria.
+					faz uso da tag <option> para que o usuário escolha uma opção que for
+					carregada. -->
+
+						<td>Matéria:</td>
+
+						<td><select class="form-select" th:field="${materia.nome}">
+								<option value="">Selecione...</option>
+								<option th:each="m : ${nome}" th:text="${m}" th:value="${m}">
+								</option>
+
+						</select></td>
+
+					</tr>
+					<tr>
+
+						<!-- Campo que adiciona uma turma relacionada a uma matéria.
+					Pega os valores da entidade Turmas. -->
+
+						<td>Turma:</td>
+						<td><input id="turma" th:field="${materia.turma.nome}">
+							<input id="idTurma" type="hidden" th:field="${materia.turma.id}" />
+
+							<input type="submit" value="Adicionar"
+							formaction="/materias/addTurma" formmethod="post" /></td>
+					</tr>
+					<tr>
+
+						<!-- Campo que possibiliata o upload de um ícone (arquivo imagem). -->
+
+						<td>ícone:</td>
+						<td><input type="file" th:name="file"> <input
+							type="hidden" th:field="${materia.icone.id}" />
+					</tr>
+
+					<!-- Campos que permitem realizar a ação de salvar os dados que foram 
+					preenchidos nos campos (Cadastrar) e permitir cancelar a ação (Cancelar)
+					voltando para o html inicio. -->
+
+					<tr>
+						<td></td>
+						<td><br> <input class="btn btn-success" type="submit"
+							th:value="${materia.id} == 0 ? Cadastrar : Editar" /> <input
+							class="btn btn-danger" type="submit" value="Cancelar"
+							formaction="/" formmethod="get" /></td>
+
+					</tr>
+
+				</table>
+
+				<!-- Campo responsável por deixar visivel quando se adicionar ou remover uma turma
+				vinculada a determinada matéria no momento do cadastro. -->
+
+				<div
+					th:if="${materia.turmas} != null and 
+		        ${!materia.turmas.empty}">
+
+					<table>
+						<caption>Turmas</caption>
+						<tr>
+							<th>Nome</th>
+							<th></th>
+						</tr>
+						<tr th:each="t : ${materia.turmas}">
+							<td th:text="${t.nome}"></td>
+							<td><input type="submit" value="Remover"
+								th:formaction="@{/materias/removerTurma/} + ${t.id}"
+								formmethod="post" /></td>
+						</tr>
+
+					</table>
+
+					<!-- Percorre a entidade Matéria para poder adicionar uma turma a partir 
+					da entidade Turma. -->
+
+					<input type="hidden" th:each="t, itemStat : ${materia.turmas}"
+						th:field="${materia.turmas[__${itemStat.index}__].id}" /> <input
+						type="hidden" th:each="t, itemStat : ${materia.turmas}"
+						th:field="${materia.turmas[__${itemStat.index}__].nome}" />
+
+				</div>
+
+			</form>
+		</div>
+
+		<!-- Caso ocorra algum erro mostrará a mensagem de erro. -->
+
+		<form th:action="@{/materias/salvar}" th:object="${materia}"
+			method="post">
+			<div th:if="${#fields.hasAnyErrors()}">
+				<ul>
+
+					<!-- Caso algum erro não especificado ocorra, irá enviar uma mensagem informando qual
+				erro aconteceu.  -->
+
+					<li th:each="error : ${#fields.detailedErrors()}"><b
+						th:text="${error.message}" style="color: red;"></b></li>
+				</ul>
+			</div>
+		</form>
+
+	</section>
+
+</body>
+</html>

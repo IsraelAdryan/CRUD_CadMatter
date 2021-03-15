@@ -1,0 +1,18 @@
+
+<!-- Está página html contem relação com o método que exibe mensagens de "sucesso" (msgSucesso)
+ou "erro" (msgErro) da execução das tarefas das páginas -->
+
+<!-- Caso a ação tenha sido realizada com sucesso, esse trecho de msgSucesso será carregada 
+para o usuário -->
+
+<div th:if="${msgSucesso} != null">
+	<b th:text="${msgSucesso}" style="color: blue;"></b> <br /> <br />
+
+</div>
+
+<!-- Caso a ação tenha dado errado, esse trecho de msgErro será carregada para o usuário -->
+
+<div th:if="${msgErro} != null">
+	<b th:text="${msgErro}" style="color: red;"></b> <br />
+
+</div>
