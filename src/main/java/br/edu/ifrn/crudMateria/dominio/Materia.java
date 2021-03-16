@@ -26,27 +26,26 @@ import javax.validation.constraints.Size;
 /**
  * Essa é a entidade Matéria.
  * 
- * A anotação @Id e @GeneratedValue são responsáveis por informar que o valor do id 
- * será gerado automaticamente pelo Spring.
+ * A anotação @Id e @GeneratedValue são responsáveis por informar que o valor do
+ * id será gerado automaticamente pelo Spring.
  * 
  * A anotação @NotBlank é para especificar que o campo no momento do cadastro
- * não pode ficar vazio. 
+ * não pode ficar vazio.
  * 
- * A anotação @Column é para especificar que o atributo
- * será uma coluna no Banco de Dados. 
+ * A anotação @Column é para especificar que o atributo será uma coluna no Banco
+ * de Dados.
  * 
- * A anotação @Valid é para realizar a validação do professor, sendo que esse atributo será
- * resgatado da entidade Professor. 
+ * A anotação @Valid é para realizar a validação do professor, sendo que esse
+ * atributo será resgatado da entidade Professor.
  * 
- * A anotação @Size é para especificar um limite
- * máximo ou minimo de caracteres a serem digitados no determinado campo no
- * momento do cadastro. 
+ * A anotação @Size é para especificar um limite máximo ou minimo de caracteres
+ * a serem digitados no determinado campo no momento do cadastro.
  * 
- * A anotação @ManytoMany é para especificar um
- * relacionamento N:N com outra entidade. 
+ * A anotação @ManytoMany é para especificar um relacionamento N:N com outra
+ * entidade.
  * 
- * A anotação @OnetoOne é para
- * especificar que existe um relacionamento 1:1 com outra entidade;
+ * A anotação @OnetoOne é para especificar que existe um relacionamento 1:1 com
+ * outra entidade;
  */
 
 @Entity
@@ -68,7 +67,6 @@ public class Materia {
 	@Column(nullable = false)
 	private String nome;
 
-	@Valid
 	@ManyToOne(optional = false)
 	private Professor professor;
 

@@ -1,7 +1,8 @@
 package br.edu.ifrn.crudMateria.controladores;
 
 /**
- * @author Israel Adryan e Alexandre Bezerra
+ * @author Israel Adryan 
+ * @author Alexandre Bezerra
  * Data: 06/03/2021
  * @version 1.0
  */
@@ -107,8 +108,8 @@ public class CadastroMateriaController {
 	 * 
 	 * @param materia: Essa anotação serve para indicar que o objeto será validado
 	 *                 tendo como base as anotações de validação que atribuímos aos
-	 *                 campos. A entidade Matéria está ligada a esse método
-	 *                 para que seus atributos possam ser acessados.
+	 *                 campos. A entidade Matéria está ligada a esse método para que
+	 *                 seus atributos possam ser acessados.
 	 * 
 	 * @param result:  Usando o BindingResult, o objeto está sendo montado baseado
 	 *                 nas informações adquiridas durante o cadastro.
@@ -121,34 +122,30 @@ public class CadastroMateriaController {
 	 */
 
 	@PostMapping("/salvar")
-	public String salvar(@Valid Materia materia, BindingResult result, ModelMap model,
-			            RedirectAttributes attr,
-			            @RequestParam("file") MultipartFile arquivo, 
-			            HttpSession sessao) {
+	public String salvar(@Valid Materia materia, BindingResult result, ModelMap model, RedirectAttributes attr,
+			@RequestParam("file") MultipartFile arquivo, HttpSession sessao) {
 
 		/**
 		 * Uso de Try e Catch para tratamento de erros.
 		 */
 
 		try {
-			
-			
+
 			/**
 			 * Responsável pela validação dos dados
 			 */
-			
-			if(result.hasErrors()) {
-				
+
+			if (result.hasErrors()) {
+
 				return "materias/cadastro";
-				
+
 			}
-			
-			if(materia.getProfessor().getId() == 0) {
-				
+
+			if (materia.getProfessor().getId() == 0) {
+
 				model.addAttribute("msgErro", "Informe o professor da matéria.");
 				return "materia/cadastro";
 			}
-			
 
 			/**
 			 * Pega o arquivo e normaliza o seu nome.
@@ -166,19 +163,18 @@ public class CadastroMateriaController {
 				 * Pegando seus bytes.
 				 */
 
-				Arquivo arquivoBD = new Arquivo(null, nomeArquivo, arquivo.getContentType(),
-						            arquivo.getBytes());
+				Arquivo arquivoBD = new Arquivo(null, nomeArquivo, arquivo.getContentType(), arquivo.getBytes());
 
 				/**
-				 * Salvando o Ícone (arquivo) no Banco de Dados.
+				 * Salvando o icone (arquivo) no Banco de Dados.
 				 */
 
 				arquivoRepository.save(arquivoBD);
 
 				/**
-				 * Se o icone (arquivo) for diferente de nulo, como também seu id, e maior que 0, ou seja,
-				 * se já tiver alguma imagem relacionada aquela matéria, a colocação de uma nova irá subscrever
-				 * a anterior, deletando a mesma.
+				 * Se o icone (arquivo) for diferente de nulo, como também seu id, e maior que
+				 * 0, ou seja, se já tiver alguma imagem relacionada aquela matéria, a colocação
+				 * de uma nova irá subscrever a anterior, deletando a mesma.
 				 * 
 				 */
 
@@ -188,11 +184,11 @@ public class CadastroMateriaController {
 					/**
 					 * Deletando o icone (arquivo) vinculado a matéria.
 					 */
-					
+
 					arquivoRepository.delete(materia.getIcone());
 
 				}
-				
+
 				/**
 				 * Enviando para subscrever.
 				 */
@@ -200,7 +196,7 @@ public class CadastroMateriaController {
 				materia.setIcone(arquivoBD);
 
 			} else {
-				
+
 				/**
 				 * Enviando para caso o campo esteja nulo.
 				 */
@@ -243,15 +239,13 @@ public class CadastroMateriaController {
 	 */
 
 	@GetMapping("/editar/{id}")
-	public String iniciarEdicao(@PathVariable("id") Integer idMateria, 
-			                    ModelMap model, 
-			                    HttpSession sessao
+	public String iniciarEdicao(@PathVariable("id") Integer idMateria, ModelMap model, HttpSession sessao
 
 	) {
 
 		/**
-		 * Realiza a busca pelo id usando a variável materiaRepository que possui essa função
-		 * em suas linhas de código.
+		 * Realiza a busca pelo id usando a variável materiaRepository que possui essa
+		 * função em suas linhas de código.
 		 */
 
 		Materia m = materiaRepository.findById(idMateria).get();
@@ -324,7 +318,7 @@ public class CadastroMateriaController {
 	 * 
 	 * @param termo: Parâmetro a ser retomado no html para realizar a operação do
 	 *               autocomplete.
-	 * @return
+	 * @return a lista de resultados.
 	 */
 
 	@GetMapping("/autocompleteTurmas")
@@ -404,8 +398,7 @@ public class CadastroMateriaController {
 	 */
 
 	@PostMapping("/removerTurma/{id}")
-	public String removerTurma(Materia materia, @PathVariable("id") Integer idTurma,
-			                   ModelMap model) {
+	public String removerTurma(Materia materia, @PathVariable("id") Integer idTurma, ModelMap model) {
 
 		/**
 		 * Cria um nova turma e envia o id ser removido.
@@ -416,7 +409,7 @@ public class CadastroMateriaController {
 
 		/**
 		 * Das turmas relacionadas com a Matéria, exclui a que foi selecionada baseado
-		 * no id.
+		 * no id..
 		 */
 
 		materia.getTurmas().remove(turma);

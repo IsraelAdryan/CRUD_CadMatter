@@ -13,13 +13,17 @@ estático armazenado nela.-->
 <meta charset="UTF-8">
 
 
- <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-BmbxuPwQa2lc/FVzBcNJ7UAyJxM6wuqIj61tLrc4wSX0szH/Ev+nYRRuWlolflfl" crossorigin="anonymous">
-	
+<link
+	href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/css/bootstrap.min.css"
+	rel="stylesheet"
+	integrity="sha384-BmbxuPwQa2lc/FVzBcNJ7UAyJxM6wuqIj61tLrc4wSX0szH/Ev+nYRRuWlolflfl"
+	crossorigin="anonymous">
+
 <title>Busca de matérias</title>
 
 </head>
 <body>
-<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+	<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
 		<div class="container-fluid">
 			<a class="navbar-brand" href="#">CadMatter</a>
 			<button class="navbar-toggler" type="button"
@@ -67,8 +71,8 @@ relacionado com o html layout. -->
 	<section layout:fragment="corpo">
 
 		<h2 style="text-align: center;">Busca de professores</h2>
-	
-	<br>
+
+		<br>
 		<!-- th:replace utilizado para especificar que os métodos de mensagem "sucesso" e "error" estão
 sendo utilizada, relacionada com o html mensagens. -->
 
@@ -82,7 +86,7 @@ sendo utilizada, relacionada com o html mensagens. -->
 
 				<!-- Utilização da tag <table> para a criação de uma tabela. -->
 
-				<table >
+				<table>
 
 					<!-- Realizará a busca procurando pelo nome do professor. -->
 
@@ -116,61 +120,56 @@ sendo utilizada, relacionada com o html mensagens. -->
 
 			</form>
 		</div>
-		<br>
-		<br>
+		<br> <br>
 
 		<!-- Caso nenhum matéria seja encontrada (Ou não possua matéria cadastrada) irá carregar os textos
 	 com as informações vazias. -->
 
-		<div class="container" th:if="${not #lists.isEmpty(professoresEncontrados)}">
+		<div class="container"
+			th:if="${not #lists.isEmpty(professoresEncontrados)}">
 			<table class="table table-dark table-striped">
 
 				<!-- Atributos da entidade Professor que serão visualizados quando
 	     executar a função de buscar. -->
 
 				<tr>
-				    <th>Foto</th>
+					<th>Foto</th>
 					<th>Nome</th>
 					<th>Sexo</th>
 					<th th:if="${mostrarTodosDados} == true">Email</th>
 					<th th:if="${mostrarTodosDados} == true">Materia</th>
 					<th>Opções</th>
 				</tr>
-				
+
 				<!-- Responsável por deixar visivel a foto (arquivo imagem)
 	         adicionado no momento do cadastro. -->
-				
+
 				<tr th:each="p : ${professoresEncontrados}">
 					<td><img th:if="${p.icone != null}"
 						th:src="@{/download/} + ${p.icone.id} + '?salvar=false'"
 						style="max-height: 100px;" /></td>
 
-				
 
-				<!-- Revela os atributos a seguir, caso a busca tenha sido realizada corretamente. -->
 
-				
+					<!-- Revela os atributos a seguir, caso a busca tenha sido realizada corretamente. -->
+
+
 					<td th:text="${p.nome}"></td>
 					<td th:text="${p.sexo}"></td>
 					<td th:if="${mostrarTodosDados} == true" th:text="${p.materia}"></td>
 					<td th:if="${mostrarTodosDados} == true" th:text="${p.email}"></td>
 					<td>
-					
 						<!-- Link para carregar a página de cadastro, caso o usuário deseje
-	                  editar alguma informação. -->
-	              
-	               <a style="color: green;"
-						th:href="'/professores/editarProf/ ' + ${p.id}">Editar</a> 
-						
-						<!-- Link a ser carregado caso o usuário deseje excluir umm professor cadastrado.
+	                  editar alguma informação. --> <a
+						style="color: green;"
+						th:href="'/professores/editarProf/ ' + ${p.id}">Editar</a> <!-- Link a ser carregado caso o usuário deseje excluir umm professor cadastrado.
 	                  onclick "lança" uma mensagem de aviso, perguntando se realmente deseja excluir
-	                  o professor especificado. -->
-	                  
-	                <a style="color: red; margin-left: 10px"
+	                  o professor especificado. --> <a
+						style="color: red; margin-left: 10px"
 						th:href="'/professores/removerProf/ ' + ${p.id}"
 						onclick="if (!confirm('Deseja realmente remover a materia?')) return false;">
 
-							  Remover </a>
+							Remover </a>
 
 					</td>
 

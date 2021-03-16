@@ -6,31 +6,30 @@ package br.edu.ifrn.crudMateria.dto;
  * @version 1.0
  */
 
-
 /**
  * Essa é a classe responsável pelo autocomplete dos campos especificados.
  */
 
 public class AutocompleteDTO {
-	
+
 	/**
-	 * Possui  atributos prórpios: label e value.
+	 * Possui atributos prórpios: label e value.
 	 */
 
 	private String label;
-	
+
 	private Integer value;
-	
+
 	/**
 	 * É um constructor que pega todos os seus atributos.
 	 */
-	
+
 	public AutocompleteDTO(String label, Integer value) {
 		super();
 		this.label = label;
 		this.value = value;
 	}
-	
+
 	/**
 	 * Gets e Sets de todos os atributos.
 	 */
@@ -38,7 +37,6 @@ public class AutocompleteDTO {
 	public void setValue(Integer value) {
 		this.value = value;
 	}
-	
 
 	public String getLabel() {
 		return label;
@@ -52,8 +50,4 @@ public class AutocompleteDTO {
 		return value;
 	}
 
-	
-	
-	
-	
 }

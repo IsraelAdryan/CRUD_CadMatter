@@ -44,8 +44,7 @@ public class DownloadArquivoController {
 	 */
 
 	@GetMapping("/download/{idArquivo}")
-	public ResponseEntity<?> downloadFile(@PathVariable Long idArquivo, @PathParam("salvar")
-	                                      String salvar) {
+	public ResponseEntity<?> downloadFile(@PathVariable Long idArquivo, @PathParam("salvar") String salvar) {
 
 		/**
 		 * Carregando arquivo do Banco de Dados.
@@ -61,10 +60,8 @@ public class DownloadArquivoController {
 				? "attachment; filename=\"" + arquivoBD.getNomeArquivo() + "\""
 				: "inline; filename=\"" + arquivoBD.getNomeArquivo() + "\"";
 
-		return ResponseEntity.ok()
-				.contentType(MediaType.parseMediaType(arquivoBD.getTipoArquivo()))
-				.header(HttpHeaders.CONTENT_DISPOSITION, texto)
-				.body(new ByteArrayResource(arquivoBD.getDados()));
+		return ResponseEntity.ok().contentType(MediaType.parseMediaType(arquivoBD.getTipoArquivo()))
+				.header(HttpHeaders.CONTENT_DISPOSITION, texto).body(new ByteArrayResource(arquivoBD.getDados()));
 
 	}
 

@@ -95,26 +95,24 @@ public class CadastroProfController {
 	 */
 
 	@PostMapping("/salvarProf")
-	public String salvarProf(@Valid Professor professor, BindingResult result, ModelMap model, 
-			                 RedirectAttributes attr,
-			                 @RequestParam("file") MultipartFile arquivo, HttpSession sessao) {
+	public String salvarProf(@Valid Professor professor, BindingResult result, ModelMap model, RedirectAttributes attr,
+			@RequestParam("file") MultipartFile arquivo, HttpSession sessao) {
 
 		/**
 		 * Uso de Try e Catch para tratamento de erros.
 		 */
 
 		try {
-			
+
 			/**
 			 * Responsável pela validação dos dados
 			 */
-			
+
 			if (result.hasErrors()) {
 
 				return "professores/cadastroProf";
 
 			}
-			
 
 			/**
 			 * Pega o arquivo e normaliza o seu nome.
@@ -132,11 +130,10 @@ public class CadastroProfController {
 				 * Pegando seus bytes.
 				 */
 
-				Arquivo arquivoBD = new Arquivo(null, nomeArquivo, arquivo.getContentType(), 
-						            arquivo.getBytes());
+				Arquivo arquivoBD = new Arquivo(null, nomeArquivo, arquivo.getContentType(), arquivo.getBytes());
 
 				/**
-				 * Salvando o Ícone no Banco de Dados
+				 * Salvando o icone no Banco de Dados
 				 */
 
 				arquivoRepository.save(arquivoBD);
@@ -213,8 +210,7 @@ public class CadastroProfController {
 	 */
 
 	@GetMapping("/editarProf/{id}")
-	public String iniciarEdicao(@PathVariable("id") Integer idProfessor, 
-			                    ModelMap model, HttpSession sessao
+	public String iniciarEdicao(@PathVariable("id") Integer idProfessor, ModelMap model, HttpSession sessao
 
 	) {
 

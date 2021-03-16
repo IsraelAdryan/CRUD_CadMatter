@@ -8,14 +8,12 @@ package br.edu.ifrn.crudMateria.repository;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 
-
 import br.edu.ifrn.crudMateria.dominio.Arquivo;
 
 /**
  * Interface responsável pela implementação dos arquivos no site.
  */
 
-public interface ArquivoRepository extends JpaRepository<Arquivo, Long>  {
-	
+public interface ArquivoRepository extends JpaRepository<Arquivo, Long> {
 
 }

@@ -18,18 +18,18 @@ import javax.persistence.Lob;
 /**
  * Essa é a entidade Arquivo.
  * 
- * A anotação @Id e @GeneratedValue são responsáveis por informar que o valor do id 
- * será gerado automaticamente pelo Spring.
+ * A anotação @Id e @GeneratedValue são responsáveis por informar que o valor do
+ * id será gerado automaticamente pelo Spring.
  * 
  * A anotação @Lob permite receber valores maiores para determinado atributo.
  * 
- * A anotação @Column é para especificar que o atributo
- * será uma coluna no Banco de Dados. 
+ * A anotação @Column é para especificar que o atributo será uma coluna no Banco
+ * de Dados.
  */
 
 @Entity
 public class Arquivo {
-	
+
 	/**
 	 * Possui 4 atributos prórpios: id, nomeArquivo, tipoArquivo e dados.
 	 */
@@ -37,12 +37,12 @@ public class Arquivo {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
-	
+
 	@Column(nullable = false)
 	private String nomeArquivo;
-	
+
 	private String tipoArquivo;
-	
+
 	@Lob
 	@Basic(fetch = FetchType.LAZY)
 	private byte[] dados;
@@ -50,7 +50,7 @@ public class Arquivo {
 	/**
 	 * É um constructor da entidade, que pega todos os seus atributos.
 	 */
-	
+
 	public Arquivo(Long id, String nomeArquivo, String tipoArquivo, byte[] dados) {
 		super();
 		this.id = id;
@@ -62,8 +62,8 @@ public class Arquivo {
 	/**
 	 * Gets e Sets de todos os atributos.
 	 */
-	
-	public Arquivo() {	
+
+	public Arquivo() {
 	}
 
 	public Long getId() {
@@ -97,10 +97,5 @@ public class Arquivo {
 	public void setDados(byte[] dados) {
 		this.dados = dados;
 	}
-	
-	
-	
-	
-	
-	
+
 }

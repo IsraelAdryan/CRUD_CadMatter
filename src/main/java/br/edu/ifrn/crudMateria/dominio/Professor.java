@@ -20,77 +20,75 @@ import javax.validation.constraints.Size;
 /**
  * Essa é a entidade Professor.
  * 
- * A anotação @Id e @GeneratedValue são responsáveis por informar que o valor do id 
- * será gerado automaticamente pelo Spring.
+ * A anotação @Id e @GeneratedValue são responsáveis por informar que o valor do
+ * id será gerado automaticamente pelo Spring.
  * 
  * A anotação @NotBlack é para especificar que o campo no momento do cadastro
- * não pode ficar vazio. 
+ * não pode ficar vazio.
  * 
- * A anotação @Column é para especificar que o atributo
- * será uma coluna no Banco de Dados. 
+ * A anotação @Column é para especificar que o atributo será uma coluna no Banco
+ * de Dados.
  * 
- * A anotação @NotNull é para especificar que
- * o campo não pode ficar nulo. 
+ * A anotação @NotNull é para especificar que o campo não pode ficar nulo.
  * 
- * A anotação @Size é para especificar um limite
- * máximo ou minimo de caracteres a serem digitados no determinado campo no
- * momento do cadastro. 
+ * A anotação @Size é para especificar um limite máximo ou minimo de caracteres
+ * a serem digitados no determinado campo no momento do cadastro.
  * 
- * A anotação @OnetoOne é para
- * especificar que existe um relacionamento 1:1 com outra entidade;
+ * A anotação @OnetoOne é para especificar que existe um relacionamento 1:1 com
+ * outra entidade;
  */
 
 @Entity
 public class Professor {
-	
+
 	/**
 	 * Especifica que o sistema irá possui dois tipo de usuário: ADMIN e COMUM.
 	 */
-	
+
 	public static final String ADMIN = "ADMIN";
 	public static final String PROF_COMUM = "COMUM";
-	
+
 	/**
 	 * Possui 6 atributos prórpios: id, nome, email, senha, sexo e matéria.
 	 * 
 	 * Possui relacionamento 1:1 com: A entidade Arquivo.
 	 */
-	
+
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int id;
-	
-	@NotBlank (message = "O campo nome é obrigatório.")
+
+	@NotBlank(message = "O campo nome é obrigatório.")
 	@Column(nullable = false)
 	private String nome;
-	
-	@NotBlank (message = "O campo email é obrigatório.")
+
+	@NotBlank(message = "O campo email é obrigatório.")
 	@Column(nullable = false)
 	private String email;
-	
-	@NotBlank (message = "O campo senha é obrigatório.")
-	@Size (min = 2, message = "Uma senha deve ter pelo menos dois caracteres.")
+
+	@NotBlank(message = "O campo senha é obrigatório.")
+	@Size(min = 2, message = "Uma senha deve ter pelo menos dois caracteres.")
 	@Column(nullable = false)
 	private String senha;
-	
-	@NotBlank (message = "O campo sexo é obrigatório.")
+
+	@NotBlank(message = "O campo sexo é obrigatório.")
 	@Column(nullable = false)
 	private String sexo;
-	
-	@NotBlank (message = "O campo matéria é obrigatório.")
+
+	@NotBlank(message = "O campo matéria é obrigatório.")
 	@Column(nullable = false)
 	private String materia;
 
 	@OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.REMOVE)
 	private Arquivo icone;
-	
+
 	@Column(nullable = false)
 	private String perfil = PROF_COMUM;
-	
+
 	/**
 	 * Métodos HashCode e equals.
 	 */
-	
+
 	@Override
 	public int hashCode() {
 		final int prime = 31;
@@ -118,7 +116,7 @@ public class Professor {
 	 * 
 	 * @return Retorna cada atributo da entidade Matéria.
 	 */
-	
+
 	public int getId() {
 		return id;
 	}
@@ -182,11 +180,5 @@ public class Professor {
 	public void setPerfil(String perfil) {
 		this.perfil = perfil;
 	}
-	
-	
-
-	
-	
-	
 
 }

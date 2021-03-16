@@ -12,14 +12,17 @@ estático armazenado nela.-->
 <head>
 <meta charset="UTF-8">
 
+<link
+	href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/css/bootstrap.min.css"
+	rel="stylesheet"
+	integrity="sha384-BmbxuPwQa2lc/FVzBcNJ7UAyJxM6wuqIj61tLrc4wSX0szH/Ev+nYRRuWlolflfl"
+	crossorigin="anonymous">
 
- <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-BmbxuPwQa2lc/FVzBcNJ7UAyJxM6wuqIj61tLrc4wSX0szH/Ev+nYRRuWlolflfl" crossorigin="anonymous">
-	
 <title>Busca de matérias</title>
 
 </head>
 <body>
-<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+	<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
 		<div class="container-fluid">
 			<a class="navbar-brand" href="#">CadMatter</a>
 			<button class="navbar-toggler" type="button"
@@ -103,29 +106,27 @@ sendo utilizada, relacionada com o html mensagens. -->
 							informações das matérias encontradas</td>
 
 					</tr>
-					
+
 					<!-- Botões para realizar a busca (Buscar) ou cancelar a operação (Cancelar).-->
-					
+
 					<tr>
 						<td></td>
-						<td><br> 
-
-							<input class="btn btn-success" type="submit" value="Buscar" /> <input
-							class="btn btn-danger" type="submit" value="Cancelar"
-							formaction="/" formmethod="get" /></td>
+						<td><br> <input class="btn btn-success" type="submit"
+							value="Buscar" /> <input class="btn btn-danger" type="submit"
+							value="Cancelar" formaction="/" formmethod="get" /></td>
 					</tr>
 
 				</table>
 
 			</form>
 		</div>
-		<br>
-		<br>
+		<br> <br>
 
 		<!-- Caso nenhum matéria seja encontrada (Ou não possua matéria cadastrada) irá carregar os textos
 	 com as informações vazias. -->
 
-		<div class="container" th:if="${not #lists.isEmpty(materiasEncontrados)}">
+		<div class="container"
+			th:if="${not #lists.isEmpty(materiasEncontrados)}">
 			<table class="table table-dark table-striped">
 
 				<!-- Atributos da entidade Matéria que serão visualizados quando
@@ -151,25 +152,17 @@ sendo utilizada, relacionada com o html mensagens. -->
 
 					<!-- Revela os atributos a seguir, caso a busca tenha sido realizada corretamente. -->
 
-					<td th:text="${m.nome}"> </td>
-					<td th:text="${m.professor.nome}"> </td>
+					<td th:text="${m.nome}"></td>
+					<td th:text="${m.professor.nome}"></td>
 					<td th:if="${mostrarTodosDados} == true" th:text="${m.carga}"></td>
 					<td th:if="${mostrarTodosDados} == true" th:text="${m.dias}"></td>
 					<td>
-					
-					<!-- Link para carregar a página de cadastro, caso o usuário deseje
-	              editar alguma informação. -->
-					
-						 <a style="color: green;"
-						th:href="'/materias/editar/ ' + ${m.id}">Editar</a> 
-						
-						
-						<!-- Link a ser carregado caso o usuário deseje excluir uma matéria cadastrada.
+						<!-- Link para carregar a página de cadastro, caso o usuário deseje
+	              editar alguma informação. --> <a style="color: green;"
+						th:href="'/materias/editar/ ' + ${m.id}">Editar</a> <!-- Link a ser carregado caso o usuário deseje excluir uma matéria cadastrada.
 	                  onclick "lança" uma mensagem de aviso, perguntando se realmente deseja excluir
-	                  a matéria especificado. -->
-	                  
-	                  
-	                   <a style="color: red;margin-left: 10px;"
+	                  a matéria especificado. --> <a
+						style="color: red; margin-left: 10px;"
 						th:href="'/materias/remover/ ' + ${m.id}"
 						onclick="if (!confirm('Deseja realmente remover a materia?')) return false;">
 
